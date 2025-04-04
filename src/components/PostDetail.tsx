@@ -1,7 +1,5 @@
-import React from "react";
 import { supabase } from "../supabase-client";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
 import { Post } from "./PostList";
 import LikeButton from "./LikeButton";
 

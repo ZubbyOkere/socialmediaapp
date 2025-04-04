@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { supabase } from "../supabase-client";
 import { Link } from "react-router";
+import PostItem from "./PostItem";
 
 export interface Post {
   title: string;
@@ -10,13 +11,14 @@ export interface Post {
   image_url: string;
   created_at: string;
   avatar_url: string;
+  like_count?: number;
+  comment_count?: number;
 }
+// helper function to fetch post from supabase
 
 const fetchPosts = async (): Promise<Post[]> => {
-  const { data, error } = await supabase
-    .from("posts")
-    .select("*")
-    .order("created_at", { ascending: false });
+  const { data, error } = await supabase.rpc("get_posts_with_counts");
+  console.log(data);
   if (error) throw new Error(error.message);
   return data;
 };
@@ -37,33 +39,8 @@ const PostList = () => {
 
   return (
     <div className="max-w-xl mx-auto space-y-6 p-4">
-      {data?.map((item) => (
-        <Link to={`/post/${item.id}`}>
-          <div
-            key={item.id}
-            className="bg-white shadow-2xl rounded-lg p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200"
-          >
-            <div className="flex items-center">
-              <img
-                src={item.avatar_url}
-                alt="user avatar"
-                className="w-8 h-8 rounded-full object-cover bg-red-700"
-              />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {item.title}
-              </h3>
-            </div>
-            <img
-              src={item.image_url}
-              alt=""
-              className="w-full max-w-md h-full rounded-md mb-4 object-cover"
-            />
-            <p className="text-gray-600 mb-4">{item.content}</p>
-            <p className="text-sm text-gray-400">
-              Posted on: {new Date(item.created_at).toLocaleString()}
-            </p>
-          </div>
-        </Link>
+      {data?.map((post, key) => (
+        <PostItem post={post} key={key} />
       ))}
     </div>
   );
