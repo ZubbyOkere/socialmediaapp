@@ -133,6 +133,7 @@ const CommentItem = ({ comment, postId }: Props) => {
         >
           {comment.content}
         </p>
+        <span className="text-red-500">Delete comment</span>
         <button
           onClick={() => setShowReply((prev) => !prev)}
           className="text-blue-500 hover:underline text-sm w-fit font-medium transition-colors duration-200"
