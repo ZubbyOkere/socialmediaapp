@@ -45,7 +45,6 @@ const PostItem = ({ post }: PostItemProps) => {
               <span>🩷 {post.like_count || 0}</span>
               <span>💬 {post.comment_count || 0}</span>
             </div>
-            <button className="text-2xl">delete</button>
           </div>
         </div>
       </Link>
