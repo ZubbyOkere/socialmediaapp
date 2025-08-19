@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
 
 interface AuthContextType {
-  user: User;
+  user: User | null;
   signInWithGitHub: () => void;
   signOut: () => void;
 }
@@ -46,36 +46,3 @@ export const useAuth = (): AuthContextType => {
   }
   return context;
 };
-
-// interface AuthContextType {
-//   user: User;
-//   signInWithGitHub: () => void;
-//   signOut: () => void;
-// }
-
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-//   const [user, setUser] = useState<User | null>();
-
-//   const signInWithGitHub = () => {
-//     supabase.auth.signInWithOAuth({ provider: "github" });
-//   };
-//   const signOut = () => {};
-
-//   return (
-//     <AuthContext.Provider value={{ signInWithGitHub, signOut, user }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-// export const useAuth = (): AuthContextType => {
-//   const context = useContext(AuthContext);
-
-//   if (context === undefined) {
-//     throw new Error("Auth must be used within auth provider");
-//   }
-
-//   return context;
-// };

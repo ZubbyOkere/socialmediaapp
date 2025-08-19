@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../supabase-client";
@@ -72,8 +72,8 @@ const CommentSection = ({ postId }: Props) => {
       createComment(
         newComments,
         postId,
-        user?.id,
-        user?.user_metadata.user_name
+        user!.id,
+        user!.user_metadata.user_name
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
@@ -82,7 +82,7 @@ const CommentSection = ({ postId }: Props) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // Prevent default form submission
-    if (!newComment) return;
+    if (!newComment || !user) return;
     mutate({ content: newComment, parent_comment_id: null });
     setNewComment("");
   };

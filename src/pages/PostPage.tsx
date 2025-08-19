@@ -1,4 +1,3 @@
-import React from "react";
 import PostDetail from "../components/PostDetail";
 import { useParams } from "react-router";
 import CommentSection from "../components/CommentSection";
